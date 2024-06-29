@@ -1,0 +1,110 @@
+/* Header.module.css */
+.mainNav {
+  display: flex;
+  gap: 1.15rem;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  font-size: 1rem;
+  font-family: 'Inter',sans-serif;
+  font-weight: 700;
+  margin-left: 0.563rem;
+  z-index: 5;
+}
+
+.mainNav.open {
+  max-height: 600px; /* Adjust as needed for content */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.socialLinks {
+  display: flex;
+  gap: 15px;
+  margin-right: 6%;
+}
+
+.menuToggle {
+  display: none;
+}
+
+@keyframes stripes {
+  to {
+    background-size:100% 100%;
+  }
+}
+
+.linkAnimation {
+  display: inline-block;
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease-out;
+  padding: 0.4rem;
+}
+
+.linkAnimation:hover {
+  color: #BDFF6A;
+  background: linear-gradient( black , black) white no-repeat 0 0;
+  background-size: 0 100%;
+  animation: stripes 0.3s linear 1 forwards;
+}
+
+.linkAnimation:focus{
+  color: #BDFF6A;
+  background:black
+}
+
+@media (max-width: 912px) {
+  .mainNav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    padding: 0;
+    margin-top: 1rem;
+    padding-bottom: 20px;
+    z-index: 5;
+  }
+
+  .socialLinks {
+    display: flex;
+    justify-content: center;
+  }
+
+  .menuToggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 3vw;
+  }
+}
+
+@media (min-width: 913px) {
+  .mainNav {
+    display: flex;
+    flex-direction: row;
+    max-height: none;
+    opacity: 1;
+    transform: none;
+    position: static;
+    box-shadow: none;
+    z-index: 5;
+  }
+
+  .menuToggle {
+    display: none;
+  }
+
+  .socialLinks {
+    display: flex;
+  }
+}
