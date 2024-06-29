@@ -6,7 +6,7 @@ import Walletconnect from './components/Walletconnect'
 import Info from './components/Info'
 
 import { useRef, useEffect, useState } from 'react';
-import Regpanel from './components/Regpanel'
+import Reginput from './components/Reginput'
 
 const apiURL = "https://prompt.armorwallet.ai/api/";
 
@@ -46,7 +46,7 @@ const Page = () => {
           
           <Info setBtnDistanceFromTop={setBtnDistanceFromTop} setRenderBtns={setRenderBtns} isDesktop={true}/> 
 
-          <Regpanel/>
+          <Reginput/>
 
         </div>
         <div className="flex-custom-1-2 flex justify-start">

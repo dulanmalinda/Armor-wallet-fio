@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import regCircle from '../assets/regpanel/regCircle.svg'
 
-const Regpanel = () => {
+const Reginput = () => {
    const [nameInput, setnameInput] = useState<string>("");
 
   const contentElementRef = useRef<HTMLDivElement>(null);
@@ -72,4 +72,4 @@ const Regpanel = () => {
   )
 }
 
-export default Regpanel
+export default Reginput
