@@ -45,7 +45,7 @@ const Page = () => {
         <div className="flex-custom-2-3">
           
           <Info setBtnDistanceFromTop={setBtnDistanceFromTop} setRenderBtns={setRenderBtns} isDesktop={true}/> 
-          
+
           <Regpanel/>
 
         </div>

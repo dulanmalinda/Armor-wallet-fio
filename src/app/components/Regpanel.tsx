@@ -3,8 +3,21 @@ import Image from 'next/image'
 import regCircle from '../assets/regpanel/regCircle.svg'
 
 const Regpanel = () => {
+   const [nameInput, setnameInput] = useState<string>("");
+
   const contentElementRef = useRef<HTMLDivElement>(null);
   const [heightContent, setHeightContent] = useState(0);
+
+  const handleChange = (e: { target: { value: any; }; }) => {
+    const input = e.target.value;
+    const characterLimit = 100; 
+
+    if (input.length <= characterLimit) {
+        setnameInput(input);
+    } else {
+      // alert(`Word limit of ${wordLimit} exceeded`);
+    }
+  };
 
   useEffect(() => {
     if (contentElementRef.current) {
@@ -49,9 +62,9 @@ const Regpanel = () => {
                     Register your @armor handle
                 </span>
 
-                <button  style={{fontSize:"1.875rem",width:"10.66rem",height:"3rem"}}  className={`bg-[#BDFF6A]  rounded `}>
-                    +
-                </button>  
+                <div class="flex justify-start">
+                    <input type="text" class="border border-black p-2 w-96 text-right focus:outline-none" placeholder="myname" onChange={handleChange} value={nameInput}/>
+                </div>
               </div>
           </div>
         </div>
