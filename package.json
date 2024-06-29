@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fioprotocol/fiosdk": "^1.8.0",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",

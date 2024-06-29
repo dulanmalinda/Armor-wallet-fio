@@ -62,8 +62,8 @@ const Reginput = () => {
                     Register your @armor handle
                 </span>
 
-                <div class="flex justify-start">
-                    <input type="text" class="border border-black p-2 w-96 text-right focus:outline-none" placeholder="myname" onChange={handleChange} value={nameInput}/>
+                <div className="flex justify-start">
+                    <input type="text" className="border border-black p-2 w-96 text-right focus:outline-none" placeholder="myname" onChange={handleChange} value={nameInput}/>
                 </div>
               </div>
           </div>
