@@ -7,6 +7,7 @@ import Info from './components/Info'
 
 import { useRef, useEffect, useState } from 'react';
 import Reginput from './components/Reginput'
+import FioHandle from './components/FioHandle'
 
 const apiURL = "https://prompt.armorwallet.ai/api/";
 
@@ -48,9 +49,11 @@ const Page = () => {
 
           <Reginput/>
 
+          {/* <FioHandle/> */}
+
         </div>
         <div className="flex-custom-1-2 flex justify-start">
-          
+          <FioHandle/>
         </div>
       </div>
 
