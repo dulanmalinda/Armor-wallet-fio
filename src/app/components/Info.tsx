@@ -35,7 +35,7 @@ const Info = ({setBtnDistanceFromTop,setRenderBtns,isDesktop}:InfoProps) => {
     if (btnComponentRef.current) {
       const rect = btnComponentRef.current.getBoundingClientRect();
       if(rect.bottom + window.scrollY > 0 && isDesktop){
-        setBtnDistanceFromTop(rect.bottom + window.scrollY - 9); 
+        setBtnDistanceFromTop(rect.bottom + window.scrollY - 8); 
         setRenderBtns(true);
       }
     }

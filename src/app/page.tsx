@@ -7,26 +7,14 @@ import Info from './components/Info'
 
 import { useRef, useEffect, useState } from 'react';
 import Reginput from './components/Reginput'
-import FioHandle from './components/FioHandle'
 
 const apiURL = "https://prompt.armorwallet.ai/api/";
-
-interface Prompt {
-  walletAddress: string;
-  prompt: string;
-  upVoteCount: number;
-  downVoteCount: number;
-  upVotedWallets: string[];
-  downVotedWallets: string[];
-}
 
 const Page = () => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   const [btnDistanceFromTop, setBtnDistanceFromTop] = useState<number | null>(0);
   const [renderBtns, setRenderBtns] = useState<boolean>(false);
-
-
 
   return (
     <>
@@ -43,17 +31,15 @@ const Page = () => {
             }
           </div>
         </div>
-        <div className="flex-custom-2-3">
+        <div className="flex-custom-2-8">
           
           <Info setBtnDistanceFromTop={setBtnDistanceFromTop} setRenderBtns={setRenderBtns} isDesktop={true}/> 
 
           <Reginput/>
 
-          {/* <FioHandle/> */}
-
         </div>
-        <div className="flex-custom-1-2 flex justify-start">
-          <FioHandle/>
+        <div className="flex-custom-0-7">
+
         </div>
       </div>
 

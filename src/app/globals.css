@@ -88,6 +88,16 @@ body {
   flex-basis: 0;
 }
 
+.flex-custom-2-8 {
+  flex-grow: 2.8;
+  flex-basis: 0;
+}
+
+.flex-custom-0-7 {
+  flex-grow: 0.7;
+  flex-basis: 0;
+}
+
 .logo-left-margins{
   margin-left:18vw;
 }
@@ -146,3 +156,8 @@ body {
   color: white;
 }
 
+
+.custom-grid {
+  display: grid;
+  grid-template-rows: 1.4fr 1fr 1fr;
+}

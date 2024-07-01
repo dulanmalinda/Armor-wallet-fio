@@ -3,7 +3,7 @@ import { FIOSDK } from '@fioprotocol/fiosdk';
 import fetch from 'node-fetch';
 import ClipLoader from "react-spinners/ClipLoader";
 
-const FioHandle = () => {
+const FioHandle = ({isLoading, setIsLoading}) => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
@@ -42,34 +42,27 @@ const FioHandle = () => {
     }
   };
 
+
   return (
-    <div>
+    <>
       <button
-              className={`mt-4 mr-4 bg-[#BDFF6A] ${( false )? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
-              onClick={registerFioHandle}
-              style={{ width: '300px', fontSize: "1rem" }}
-              disabled={false}
-            >
-              {/* {loading ? (
+          className={`ml-5 mr-4 bg-[#BDFF6A] ${( isLoading.isLoading )? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          onClick={() => setIsLoading(true)}
+          style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading.isLoading}>
+            {
+              isLoading.isLoading?
                 <ClipLoader
                   color={"#000000"}
-                  loading={true}
+                  loading={isLoading}
                   size={15}
                   aria-label="Loading Spinner"
                   data-testid="loader"
-                />
-              ) : (
-                "Submit Your Prompt"
-              )} */}
-              <ClipLoader
-                  color={"#000000"}
-                  loading={true}
-                  size={15}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-            </button>
-    </div>
+                />  
+              :
+              'REGISTER'
+            }                      
+        </button>
+    </>
   );
 };
 
