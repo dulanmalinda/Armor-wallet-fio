@@ -77,7 +77,7 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser}: Wa
   }, []);
 
   const fetchUser = (addr:String) => {
-    fetch(`${baseApiURL}user/${addr}`)
+    fetch(`${baseApiURL}${addr}`)
       .then((response) => response.json())
       .then((data) => {
         setUser(data);
