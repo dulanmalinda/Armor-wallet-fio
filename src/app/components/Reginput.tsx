@@ -3,15 +3,22 @@ import Image from 'next/image'
 import regCircle from '../assets/regpanel/regCircle.svg'
 import FioHandle from '../components/FioHandle'
 
-const Reginput = () => {
+interface InfoProps {
+  walletAddress: string | null
+  armorHandle: string | null
+  setArmorhandle: (newValue: string) => void;
+  baseApiURL:String;
+}
+
+const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProps) => {
    const [nameInput, setnameInput] = useState<string>("");
 
   const contentElementRef = useRef<HTMLDivElement>(null);
   const [heightContent, setHeightContent] = useState(0);
 
-  const fioBtnRef = useRef<HTMLDivElement>(null);
-
   const [isLoading, setIsLoading] = useState(false);
+  const [hasRequested, setHasRequested] = useState(false);
+  const [requestSuccess, setRequestSuccess] = useState(false);
 
   const handleChange = (e: { target: { value: any; }; }) => {
     const input = e.target.value;
@@ -64,17 +71,34 @@ const Reginput = () => {
           <div className="ml-4 mt-2 sm:mt-0" ref={contentElementRef}>
               <div className="flex flex-col items-Start">
                 <span style={{fontSize:"1rem",fontWeight:"400",marginBottom:"1rem"}}>
-                    Register your @armor handle
+                    {
+                      armorHandle?
+                      "Your @armor handle"
+                      :
+                      "Register your @armor handle"
+                    }
                 </span>
 
-                <div ref={fioBtnRef} className="flex justify-start items-center">
-                    <input  type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
+                <div className={`${armorHandle ? "hidden":""} flex justify-start items-center`}>
+                    <input disabled={hasRequested} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
                     
                     <span style={{fontSize:"1rem",fontWeight:"700",marginLeft:"0.5rem"}}>
                       @armor
                     </span>
-                    <FioHandle isLoading={isLoading} setIsLoading={setIsLoading}/>
+                    <FioHandle 
+                      nameInput={nameInput} setnameInput={setnameInput}
+                      armorHandle={armorHandle} setArmorhandle={setArmorhandle}
+                      walletAddress={walletAddress} 
+                      isLoading={isLoading} setIsLoading={setIsLoading} 
+                      hasRequested={hasRequested} setHasRequested={setHasRequested} 
+                      requestSuccess={requestSuccess}  setRequestSuccess={setRequestSuccess}
+                      baseApiURL={baseApiURL}/>
                 </div>
+
+                <div className={`${armorHandle ? "":"hidden"} flex justify-start items-center`} style={{fontSize:"2.25rem",fontWeight:"400"}}>
+                    {armorHandle}
+                </div>
+
               </div>
           </div>
         </div>

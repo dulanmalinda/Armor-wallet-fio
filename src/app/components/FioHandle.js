@@ -3,9 +3,11 @@ import { FIOSDK } from '@fioprotocol/fiosdk';
 import fetch from 'node-fetch';
 import ClipLoader from "react-spinners/ClipLoader";
 
-const FioHandle = ({isLoading, setIsLoading}) => {
+const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddress,isLoading, setIsLoading,hasRequested,setHasRequested,requestSuccess,setRequestSuccess,baseApiURL}) => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+
+  const [showRequestStat, setShowRequestStat] = useState(false);
 
   const fetchJson = async (uri, opts = {}) => {
     return fetch(uri, opts);
@@ -21,7 +23,7 @@ const FioHandle = ({isLoading, setIsLoading}) => {
     const contract = 'fio.address';
 
     const actionData = {
-      fio_address: 'user10006@fiotestnet',
+      fio_address: `${nameInput}@fiotestnet`,
       owner_fio_public_key: publicKey,
       max_fee: 10000000000000,
       tpid: '',
@@ -31,26 +33,61 @@ const FioHandle = ({isLoading, setIsLoading}) => {
     const user = new FIOSDK(privateKey, publicKey, apiNode, fetchJson);
 
     try {
+      setIsLoading(true);
+      setHasRequested(true);
       const result = await user.genericAction('pushTransaction', {
         action: action,
         account: contract,
-        data: actionData
+        data: actionData,
       });
       setResult(result);
+      setRequestSuccess(true);
     } catch (err) {
       setError(err);
+      setRequestSuccess(false);
+    } finally {
+      saveUser();
     }
   };
 
+  useEffect(() => {
+    if(!isLoading && hasRequested)
+    {
+      setShowRequestStat(true);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if(hasRequested && !requestSuccess)
+    {
+      setShowRequestStat(false);
+      setHasRequested(false);
+    }
+  }, [nameInput]);
+
+  const saveUser = async () => {
+    const fioUsername = `${nameInput}@fiotestnet`;
+
+    const res = await fetch(`${baseApiURL}user/save`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "fioUsername":fioUsername,"walletAddress":walletAddress}),
+    });
+
+    const data = await res.json(); 
+    setIsLoading(false);
+  }
 
   return (
     <>
-      <button
-          className={`ml-5 mr-4 bg-[#BDFF6A] ${( isLoading.isLoading )? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
-          onClick={() => setIsLoading(true)}
-          style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading.isLoading}>
+      <button 
+          className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          onClick={registerFioHandle}
+          style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
             {
-              isLoading.isLoading?
+              isLoading?
                 <ClipLoader
                   color={"#000000"}
                   loading={isLoading}
@@ -62,6 +99,16 @@ const FioHandle = ({isLoading, setIsLoading}) => {
               'REGISTER'
             }                      
         </button>
+        
+        <div className={`${(!showRequestStat) ? "hidden" : ""}`} style={{ width:"25rem",marginLeft:"5rem",lineHeight:"1.375rem",fontSize:"1rem",fontWeight:"700"}}>
+          <span className={`${(requestSuccess) ? "text-[#7CDF00]" : "hidden"}`}>
+            Congratulations, you have registered your handle.
+          </span>
+
+          <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
+            {error?.message || String(error)}
+          </span>
+        </div>
     </>
   );
 };

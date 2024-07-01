@@ -8,13 +8,17 @@ import Info from './components/Info'
 import { useRef, useEffect, useState } from 'react';
 import Reginput from './components/Reginput'
 
-const apiURL = "https://prompt.armorwallet.ai/api/";
+const apiURL = "http://localhost:5000/api/";
 
 const Page = () => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   const [btnDistanceFromTop, setBtnDistanceFromTop] = useState<number | null>(0);
   const [renderBtns, setRenderBtns] = useState<boolean>(false);
+
+  const [user, setUser] = useState<any>();
+
+  const [armorHandle,setArmorhandle] = useState("");
 
   return (
     <>
@@ -26,7 +30,7 @@ const Page = () => {
           <div style={{position:"absolute",top:`${btnDistanceFromTop}px`}}>
             {
               renderBtns? 
-              <Walletconnect setWalletAddress={setWalletAddress} baseApiURL={apiURL} />
+              <Walletconnect setWalletAddress={setWalletAddress}  baseApiURL={apiURL} setArmorhandle={setArmorhandle} setUser={setUser}/>
               : ''
             }
           </div>
@@ -35,7 +39,7 @@ const Page = () => {
           
           <Info setBtnDistanceFromTop={setBtnDistanceFromTop} setRenderBtns={setRenderBtns} isDesktop={true}/> 
 
-          <Reginput/>
+          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL}/>
 
         </div>
         <div className="flex-custom-0-7">
@@ -48,7 +52,7 @@ const Page = () => {
 
           <Info setBtnDistanceFromTop={setBtnDistanceFromTop} setRenderBtns={setRenderBtns} isDesktop={false}/>
 
-          <Walletconnect setWalletAddress={setWalletAddress} baseApiURL={apiURL} />
+          <Walletconnect setWalletAddress={setWalletAddress} baseApiURL={apiURL} setArmorhandle={setArmorhandle} setUser={setUser} />
         
             
       </div>

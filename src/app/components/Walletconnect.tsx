@@ -12,9 +12,11 @@ import connectTick from '../assets/walletConnect/tick_walletConnect.svg'
 interface WalletconnectProps {
   setWalletAddress: (newValue: string | null) => void;
   baseApiURL:string;
+  setArmorhandle: (newValue: string ) => void;
+  setUser: (newValue: any) => void;
 }
 
-const Walletconnect = ({ setWalletAddress,baseApiURL}: WalletconnectProps) => {
+const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser}: WalletconnectProps) => {
   const [connectedChainId, setConnectedChainId] = useState(0);
   
   const contentElementRef = useRef<HTMLDivElement>(null);
@@ -39,11 +41,13 @@ const Walletconnect = ({ setWalletAddress,baseApiURL}: WalletconnectProps) => {
     const onConnected = (addr:string = "",chainId = 0) =>{
         setWalletAddress(addr);
         setConnectedChainId(chainId);
+        fetchUser(addr);
     }
 
     const onDisconnected = () =>{
       setWalletAddress("");
       setConnectedChainId(0);
+      window.location.reload();
   }
 
     const truncateText = (text: string, maxLength: number) => {
@@ -71,6 +75,15 @@ const Walletconnect = ({ setWalletAddress,baseApiURL}: WalletconnectProps) => {
       setHeightContentMobile(contentElementMobileRef.current.offsetHeight + 20);
     }
   }, []);
+
+  const fetchUser = (addr:String) => {
+    fetch(`${baseApiURL}user/${addr}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data);
+        setArmorhandle(data.fioUsername);
+      });
+  };
 
   const customRender = () => {
     return (
