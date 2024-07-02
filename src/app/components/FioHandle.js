@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { FIOSDK } from '@fioprotocol/fiosdk';
 import fetch from 'node-fetch';
 import ClipLoader from "react-spinners/ClipLoader";
+import { useActiveAccount } from "thirdweb/react";
 
-const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddress,isLoading, setIsLoading,hasRequested,setHasRequested,requestSuccess,setRequestSuccess,baseApiURL}) => {
+const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddress,isLoading, setIsLoading,hasRequested,setHasRequested,requestSuccess,setRequestSuccess,baseApiURL,captchaToken}) => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
+  const [signature, setSignature] = useState("");
+
   const [showRequestStat, setShowRequestStat] = useState(false);
+
+  const activeAccount = useActiveAccount();
 
   const fetchJson = async (uri, opts = {}) => {
     return fetch(uri, opts);
@@ -33,7 +38,7 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
     const user = new FIOSDK(privateKey, publicKey, apiNode, fetchJson);
 
     try {
-      setIsLoading(true);
+      setSignature(null);
       setHasRequested(true);
       const result = await user.genericAction('pushTransaction', {
         action: action,
@@ -50,12 +55,43 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
     }
   };
 
+  const handleSignMessage = async () => {
+    if (!nameInput) {
+      alert('Please enter a handle to sign.');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const signature = await activeAccount?.signMessage({message:"Confirm you armor handle"});
+
+      if(signature)
+      {
+        setSignature(signature?.toString());
+      }
+
+    } catch (error) {
+      console.error("Error signing message:", error);
+      setLoading(false);
+    }
+  }; 
+
   useEffect(() => {
     if(!isLoading && hasRequested)
     {
       setShowRequestStat(true);
     }
   }, [isLoading]);
+
+
+  useEffect(() => {
+    if(signature)
+    {
+      registerFioHandle();
+    }
+  }, [signature]);
+
 
   useEffect(() => {
     if(hasRequested && !requestSuccess)
@@ -64,6 +100,15 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
       setHasRequested(false);
     }
   }, [nameInput]);
+
+  useEffect(() => {
+    if(!walletAddress)
+    {
+      setSignature(null);
+      setShowRequestStat(false);
+      setHasRequested(false);
+    }
+  }, [walletAddress]);
 
   const saveUser = async () => {
     const fioUsername = `${nameInput}@fiotestnet`;
@@ -80,13 +125,14 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
     setIsLoading(false);
   }
 
+
   return (
     <>
     <div className='hideOnMobile'>
     <button 
-          className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
-          onClick={registerFioHandle}
-          style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
+          className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress || !captchaToken)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          onClick={handleSignMessage}
+          style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress || !captchaToken}>
             {
               isLoading?
                 <ClipLoader

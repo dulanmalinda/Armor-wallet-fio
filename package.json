@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@fioprotocol/fiosdk": "^1.8.0",
+    "@types/react-google-recaptcha": "^2.1.9",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-google-recaptcha": "^3.1.0",
     "react-spinners": "^0.14.1",
     "thirdweb": "^5.31.0"
   },

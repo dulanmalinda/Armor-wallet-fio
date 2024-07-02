@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import regCircle from '../assets/regpanel/regCircle.svg'
 import FioHandle from '../components/FioHandle'
+import ReCAPTCHA from 'react-google-recaptcha';
 
 interface InfoProps {
   walletAddress: string | null
@@ -20,6 +21,9 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
   const [hasRequested, setHasRequested] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
 
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
   const handleChange = (e: { target: { value: any; }; }) => {
     const input = e.target.value;
     const characterLimit = 100; 
@@ -35,7 +39,29 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
     if (contentElementRef.current) {
       setHeightContent(contentElementRef.current.offsetHeight + 30);
     }
-  }, []);
+  }, [armorHandle,walletAddress]);
+
+  useEffect(() => {
+    if (!walletAddress) {
+      if(nameInput){
+        setnameInput("");
+      }
+
+      if(requestSuccess){
+        setRequestSuccess(false);
+      }
+
+      if(hasRequested){
+        setHasRequested(false);
+      }
+
+      setCaptchaToken(null);
+    }
+  }, [walletAddress]);
+
+  const handleCaptchaVerify = (token: string | null) => {
+    setCaptchaToken(token);
+  };
 
   return (
     <>
@@ -78,6 +104,20 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                       "Register your @armor handle"
                     }
                 </span>
+                
+                {
+                  walletAddress
+                  ?
+                    <ReCAPTCHA
+                    sitekey="6LfjewYqAAAAACtB-x_sXpPPO134pSfwqBQyn-yZ"
+                    ref={recaptchaRef}
+                    onChange={handleCaptchaVerify}
+                    className={`${armorHandle ? "hidden":""}`}
+                    style={{minHeight:"6rem"}}
+                  />
+                :
+                ''
+                }
 
                 <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnMobile`}>
                     <input disabled={hasRequested} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
@@ -92,7 +132,8 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                       isLoading={isLoading} setIsLoading={setIsLoading} 
                       hasRequested={hasRequested} setHasRequested={setHasRequested} 
                       requestSuccess={requestSuccess}  setRequestSuccess={setRequestSuccess}
-                      baseApiURL={baseApiURL}/>
+                      baseApiURL={baseApiURL}
+                      captchaToken={captchaToken}/>
                 </div>
 
                 <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnDesktop`}>
@@ -108,7 +149,8 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                       isLoading={isLoading} setIsLoading={setIsLoading} 
                       hasRequested={hasRequested} setHasRequested={setHasRequested} 
                       requestSuccess={requestSuccess}  setRequestSuccess={setRequestSuccess}
-                      baseApiURL={baseApiURL}/>
+                      baseApiURL={baseApiURL}
+                      captchaToken={captchaToken}/>
                 </div>
 
                 <div className={`${armorHandle ? "":"hidden"} flex justify-start items-center`} style={{fontSize:"2.25rem",fontWeight:"400"}}>
