@@ -47,7 +47,6 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser}: Wa
     const onDisconnected = () =>{
       setWalletAddress("");
       setConnectedChainId(0);
-      window.location.reload();
   }
 
     const truncateText = (text: string, maxLength: number) => {

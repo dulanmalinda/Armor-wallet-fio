@@ -20,6 +20,18 @@ const Page = () => {
 
   const [armorHandle,setArmorhandle] = useState("");
 
+  useEffect(() => {
+    if(!walletAddress){
+      if(user){
+        setUser("");
+      }
+
+      if(armorHandle){
+        setArmorhandle("");
+      }
+    }
+  }, [walletAddress]);
+
   return (
     <>
     <div className="flex flex-col min-h-screen inter.variable">
