@@ -53,7 +53,7 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                     
                 </span> */}
                 <span className="mx-1 sm:mx-0 sm:ml-2 flex justify-end" style={{ width: '2rem'}}>
-                    <Image src={regCircle} alt="reg circle" style={{width:"1rem",height:"1rem",marginTop:"0.25rem"}}/>
+                    <Image src={regCircle} alt="reg circle" style={{width:"1.25rem",height:"1.25rem",marginTop:"0.25rem"}}/>
                 </span>
             </div>
 
@@ -68,7 +68,7 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
             }}
             />
             </div>
-          <div className="ml-4 mt-2 sm:mt-0" ref={contentElementRef}>
+          <div className="ml-4 mt-0" ref={contentElementRef}>
               <div className="flex flex-col items-Start">
                 <span style={{fontSize:"1rem",fontWeight:"400",marginBottom:"1rem"}}>
                     {
@@ -79,8 +79,24 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                     }
                 </span>
 
-                <div className={`${armorHandle ? "hidden":""} flex justify-start items-center`}>
+                <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnMobile`}>
                     <input disabled={hasRequested} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
+                    
+                    <span style={{fontSize:"1rem",fontWeight:"700",marginLeft:"0.5rem"}}>
+                      @armor
+                    </span>
+                    <FioHandle 
+                      nameInput={nameInput} setnameInput={setnameInput}
+                      armorHandle={armorHandle} setArmorhandle={setArmorhandle}
+                      walletAddress={walletAddress} 
+                      isLoading={isLoading} setIsLoading={setIsLoading} 
+                      hasRequested={hasRequested} setHasRequested={setHasRequested} 
+                      requestSuccess={requestSuccess}  setRequestSuccess={setRequestSuccess}
+                      baseApiURL={baseApiURL}/>
+                </div>
+
+                <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnDesktop`}>
+                    <input disabled={hasRequested} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"10rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
                     
                     <span style={{fontSize:"1rem",fontWeight:"700",marginLeft:"0.5rem"}}>
                       @armor

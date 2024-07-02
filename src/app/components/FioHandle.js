@@ -82,7 +82,8 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
 
   return (
     <>
-      <button 
+    <div className='hideOnMobile'>
+    <button 
           className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
           onClick={registerFioHandle}
           style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
@@ -109,6 +110,37 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
             {error?.message || String(error)}
           </span>
         </div>
+    </div>
+
+    <div className='hideOnDesktop'>
+    <button 
+          className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          onClick={registerFioHandle}
+          style={{ width:"10rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
+            {
+              isLoading?
+                <ClipLoader
+                  color={"#000000"}
+                  loading={isLoading}
+                  size={15}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />  
+              :
+              'REGISTER'
+            }                      
+        </button>
+        
+        <div className={`${(!showRequestStat) ? "hidden" : ""}`} style={{ width:"10rem",marginLeft:"5rem",lineHeight:"1.375rem",fontSize:"1rem",fontWeight:"700"}}>
+          <span className={`${(requestSuccess) ? "text-[#7CDF00]" : "hidden"}`}>
+            Congratulations, you have registered your handle.
+          </span>
+
+          <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
+            {error?.message || String(error)}
+          </span>
+        </div>
+    </div>
     </>
   );
 };

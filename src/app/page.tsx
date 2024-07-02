@@ -66,6 +66,7 @@ const Page = () => {
 
           <Walletconnect setWalletAddress={setWalletAddress} baseApiURL={apiURL} setArmorhandle={setArmorhandle} setUser={setUser} />
         
+          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL}/>
             
       </div>
       
