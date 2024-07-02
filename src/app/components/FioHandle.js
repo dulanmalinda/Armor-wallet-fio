@@ -131,7 +131,7 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
             }                      
         </button>
         
-        <div className={`${(!showRequestStat) ? "hidden" : ""}`} style={{ width:"10rem",marginLeft:"5rem",lineHeight:"1.375rem",fontSize:"1rem",fontWeight:"700"}}>
+        <div className={`${(!showRequestStat) ? "hidden" : ""}`} style={{ width:"10rem",marginLeft:"1rem",lineHeight:"1.375rem",fontSize:"1rem",fontWeight:"700"}}>
           <span className={`${(requestSuccess) ? "text-[#7CDF00]" : "hidden"}`}>
             Congratulations, you have registered your handle.
           </span>
