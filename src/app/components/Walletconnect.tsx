@@ -38,8 +38,6 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser}: Wa
     createWallet("me.rainbow"),
     createWallet("com.trustwallet.app"),
     createWallet("com.coinbase.wallet"),
-    createWallet("org.uniswap"),
-    createWallet("app.phantom"),
     createWallet("walletConnect"),
   ];
 
