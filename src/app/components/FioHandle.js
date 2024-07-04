@@ -139,8 +139,8 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
                   color={"#000000"}
                   loading={isLoading}
                   size={15}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
+                  aria-label="Loading Spinner desktop"
+                  data-testid="loader desktop"
                 />  
               :
               'REGISTER'
@@ -161,7 +161,7 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
     <div className='hideOnDesktop'>
     <button 
           className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
-          onClick={registerFioHandle}
+          onClick={handleSignMessage}
           style={{ width:"10rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
             {
               isLoading?
@@ -169,8 +169,8 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
                   color={"#000000"}
                   loading={isLoading}
                   size={15}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
+                  aria-label="Loading Spinner mobile"
+                  data-testid="loader mobile"
                 />  
               :
               'REGISTER'
