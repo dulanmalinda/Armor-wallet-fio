@@ -82,6 +82,7 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser}: Wa
     fetch(`${baseApiURL}user/${addr}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setUser(data);
         setArmorhandle(data.fioUsername);
       });

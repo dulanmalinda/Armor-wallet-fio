@@ -47,8 +47,16 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
       setResult(result);
       setSignature(null);
       saveUser();
-    } catch (err) {
-      setError(err);
+    } catch (_err) {
+
+      const err = JSON.stringify(_err.json);
+      let errorMessage = 'An unknown error occurred';
+      const errorFields =  JSON.parse(err).fields;
+      if (errorFields && errorFields.length > 0) {
+        errorMessage = errorFields.map(field => field.error).join(', ');
+      }
+      setError(errorMessage);
+
       setRequestSuccess(false);
       setInputEnabled(true);
       setIsLoading(false);
@@ -162,9 +170,9 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
 
     <div className='hideOnDesktop'>
     <button 
-          className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress || !captchaToken)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
           onClick={handleSignMessage}
-          style={{ width:"10rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
+          style={{ width:"10rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress || !captchaToken}>
             {
               isLoading?
                 <ClipLoader
