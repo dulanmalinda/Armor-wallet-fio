@@ -139,8 +139,8 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
                   color={"#000000"}
                   loading={isLoading}
                   size={15}
-                  aria-label="Loading Spinner desktop"
-                  data-testid="loader desktop"
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
                 />  
               :
               'REGISTER'
@@ -169,8 +169,8 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
                   color={"#000000"}
                   loading={isLoading}
                   size={15}
-                  aria-label="Loading Spinner mobile"
-                  data-testid="loader mobile"
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
                 />  
               :
               'REGISTER'
