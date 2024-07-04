@@ -21,6 +21,8 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
   const [hasRequested, setHasRequested] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
 
+  const [inputEnabled, setInputEnabled] = useState(true);
+
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
@@ -120,12 +122,13 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                 }
 
                 <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnMobile`}>
-                    <input disabled={hasRequested} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
+                    <input disabled={!inputEnabled} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
                     
                     <span style={{fontSize:"1rem",fontWeight:"700",marginLeft:"0.5rem"}}>
                       @armor
                     </span>
                     <FioHandle 
+                      setInputEnabled={setInputEnabled}
                       nameInput={nameInput} setnameInput={setnameInput}
                       armorHandle={armorHandle} setArmorhandle={setArmorhandle}
                       walletAddress={walletAddress} 
@@ -137,12 +140,13 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                 </div>
 
                 <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnDesktop`}>
-                    <input disabled={hasRequested} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"10rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
+                    <input disabled={!inputEnabled} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"10rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
                     
                     <span style={{fontSize:"1rem",fontWeight:"700",marginLeft:"0.5rem"}}>
                       @armor
                     </span>
                     <FioHandle 
+                      setInputEnabled={setInputEnabled}
                       nameInput={nameInput} setnameInput={setnameInput}
                       armorHandle={armorHandle} setArmorhandle={setArmorhandle}
                       walletAddress={walletAddress} 

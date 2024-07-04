@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useActiveAccount } from "thirdweb/react";
 
-const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddress,isLoading, setIsLoading,hasRequested,setHasRequested,requestSuccess,setRequestSuccess,baseApiURL,captchaToken}) => {
+const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorhandle,walletAddress,isLoading, setIsLoading,hasRequested,setHasRequested,requestSuccess,setRequestSuccess,baseApiURL,captchaToken}) => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
@@ -46,12 +46,12 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
         data: actionData,
       });
       setResult(result);
-      setRequestSuccess(true);
+      saveUser();
     } catch (err) {
       setError(err);
       setRequestSuccess(false);
-    } finally {
-      saveUser();
+      setInputEnabled(true);
+      setIsLoading(false);
     }
   };
 
@@ -62,6 +62,7 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
     }
 
     setIsLoading(true);
+    setInputEnabled(false);
 
     try {
       const signature = await activeAccount?.signMessage({message:"Confirm you armor handle"});
@@ -122,6 +123,7 @@ const FioHandle = ({nameInput,setnameInput,armorHandle,setArmorhandle,walletAddr
     });
 
     const data = await res.json(); 
+    setRequestSuccess(true);
     setIsLoading(false);
   }
 
