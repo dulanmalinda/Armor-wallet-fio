@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any"></link>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any"></link>
         <title>Armor</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"></link>
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"></link>
