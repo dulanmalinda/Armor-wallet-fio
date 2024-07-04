@@ -20,8 +20,8 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
 
   const registerFioHandle = async () => {
     const apiNode = 'https://test.fio.eosusa.io/v1/';
-    const privateKey = '5KTQVwCTwEvdhBEpXcpYWdpCatDaY3j61aPHMYzGgHQKNj2Zydz';
-    const publicKey = 'FIO5n2XM5cz9dFsfc2ayjE2aWtC716Q4HdbqsberQHaWAmkYuoZM6';
+    const privateKey = '5KeEud4cB9gkMRk6zeTHGPzDPphw56MtJZKxrmiWBk5qa1BFUcH';
+    const publicKey = 'FIO689wHkmVJTN37UP828ackTLuLjmcAHhJx8XHWMRno21mtqVLcj';
     const account = FIOSDK.accountHash(publicKey).accountnm;
 
     const action = 'regaddress';
@@ -38,7 +38,6 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
     const user = new FIOSDK(privateKey, publicKey, apiNode, fetchJson);
 
     try {
-      setSignature(null);
       setHasRequested(true);
       const result = await user.genericAction('pushTransaction', {
         action: action,
@@ -46,6 +45,7 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
         data: actionData,
       });
       setResult(result);
+      setSignature(null);
       saveUser();
     } catch (err) {
       setError(err);
