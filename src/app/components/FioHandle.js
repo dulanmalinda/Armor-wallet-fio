@@ -58,7 +58,7 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
       setError(errorMessage);
 
       setRequestSuccess(false);
-      setInputEnabled(true);
+      //setInputEnabled(true);
       setIsLoading(false);
     }
   };
@@ -135,6 +135,9 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
     setIsLoading(false);
   }
 
+  const reloadPage = ()=>{
+    window.location.reload();
+  }
 
   return (
     <>
@@ -162,10 +165,25 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
             Congratulations, you have registered your handle.
           </span>
 
-          <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
-            {error?.message || String(error)}
-          </span>
+            <div className='flex flex-col items-start'>
+              <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
+                {error?.message || String(error)}
+              </span>
+
+              <button 
+                className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
+                style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
+                onClick={reloadPage}
+                >
+
+                Try Again
+
+              </button>
+            </div>
+
         </div>
+
+
     </div>
 
     <div className='hideOnDesktop'>
@@ -192,9 +210,22 @@ const FioHandle = ({setInputEnabled,nameInput,setnameInput,armorHandle,setArmorh
             Congratulations, you have registered your handle.
           </span>
 
-          <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
-            {error?.message || String(error)}
-          </span>
+          <div className='flex flex-col items-start'>
+              <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
+                {error?.message || String(error)}
+              </span>
+
+              <button 
+                className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
+                style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
+                onClick={reloadPage}
+                >
+
+                Try Again
+
+              </button>
+            </div>
+            
         </div>
     </div>
     </>
