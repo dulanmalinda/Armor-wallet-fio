@@ -139,31 +139,10 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                     <Captcha isOpen={showPopup} onClose={togglePopUp} armorHandle={armorHandle} captchaToken={captchaToken} setCaptchaToken={setCaptchaToken} handleSignMessage={handleSignMessage} />
                   </div>
 
-                <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnMobile`}>
-                    <input disabled={!inputEnabled} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
-                    
-                    <span style={{fontSize:"1rem",fontWeight:"700",marginLeft:"0.5rem"}}>
-                      @armor
-                    </span>
-                    <FioHandle 
-                      togglePopUp={togglePopUp}
-                      signature={signature}
-                      setSignature={setSignature}
-                      handleSignMessage={handleSignMessage}
-                      setInputEnabled={setInputEnabled}
-                      nameInput={nameInput} setnameInput={setnameInput}
-                      armorHandle={armorHandle} setArmorhandle={setArmorhandle}
-                      walletAddress={walletAddress} 
-                      isLoading={isLoading} setIsLoading={setIsLoading} 
-                      hasRequested={hasRequested} setHasRequested={setHasRequested} 
-                      requestSuccess={requestSuccess}  setRequestSuccess={setRequestSuccess}
-                      baseApiURL={baseApiURL}
-                      captchaToken={captchaToken}/>
-                </div>
+                <div className={`${armorHandle ? "hidden":""} flex justify-start items-center`}>
+                    <input disabled={!inputEnabled} type="text" className="hideOnMobile border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
+                    <input disabled={!inputEnabled} type="text" className="hideOnDesktop border border-black p-2 text-right focus:outline-none" style={{width:"10rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
 
-                <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnDesktop`}>
-                    <input disabled={!inputEnabled} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"10rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
-                    
                     <span style={{fontSize:"1rem",fontWeight:"700",marginLeft:"0.5rem"}}>
                       @armor
                     </span>

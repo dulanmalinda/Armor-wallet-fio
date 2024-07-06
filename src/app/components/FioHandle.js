@@ -43,8 +43,8 @@ const FioHandle = ({togglePopUp,signature,setSignature,handleSignMessage,setInpu
       setResult(result);
       setSignature(null);
       saveUser();
-    } catch (_err) {
 
+    } catch (_err) {
       const err = JSON.stringify(_err.json);
       let errorMessage = 'An unknown error occurred';
       const errorFields =  JSON.parse(err).fields;
@@ -142,18 +142,24 @@ const FioHandle = ({togglePopUp,signature,setSignature,handleSignMessage,setInpu
 
             <div className='flex flex-col items-start'>
               <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
-                {error?.message || String(error)}
+                {error || String(error)}
               </span>
 
-              <button 
-                className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
-                style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
-                onClick={reloadPage}
-                >
+              {
+                !requestSuccess
+                ?
+                <button 
+                  className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
+                  style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
+                  onClick={reloadPage}
+                  >
 
-                Try Again
+                  Try Again
 
-              </button>
+                </button>
+                :
+                ''
+              }
             </div>
 
         </div>
@@ -187,18 +193,24 @@ const FioHandle = ({togglePopUp,signature,setSignature,handleSignMessage,setInpu
 
           <div className='flex flex-col items-start'>
               <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
-                {error?.message || String(error)}
+                {error || String(error)}
               </span>
 
-              <button 
-                className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
-                style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
-                onClick={reloadPage}
-                >
+              {
+                !requestSuccess
+                ?
+                <button 
+                  className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
+                  style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
+                  onClick={reloadPage}
+                  >
 
-                Try Again
+                  Try Again
 
-              </button>
+                </button>
+                :
+                ''
+              }
             </div>
             
         </div>
