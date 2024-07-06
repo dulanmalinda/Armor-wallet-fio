@@ -14,9 +14,10 @@ interface WalletconnectProps {
   baseApiURL:string;
   setArmorhandle: (newValue: string ) => void;
   setUser: (newValue: any) => void;
+  setExisitingHandledChecked: (newValue: any) => void;
 }
 
-const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser}: WalletconnectProps) => {
+const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser,setExisitingHandledChecked}: WalletconnectProps) => {
   const [connectedChainId, setConnectedChainId] = useState(0);
   
   const contentElementRef = useRef<HTMLDivElement>(null);
@@ -50,6 +51,7 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser}: Wa
     const onDisconnected = () =>{
       setWalletAddress("");
       setConnectedChainId(0);
+      setExisitingHandledChecked(false);
   }
 
     const truncateText = (text: string, maxLength: number) => {
@@ -82,9 +84,9 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser}: Wa
     fetch(`${baseApiURL}user/${addr}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setUser(data);
         setArmorhandle(data.fioUsername);
+        setExisitingHandledChecked(true);
       });
   };
 

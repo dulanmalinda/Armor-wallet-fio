@@ -17,6 +17,7 @@ const Page = () => {
   const [renderBtns, setRenderBtns] = useState<boolean>(false);
 
   const [user, setUser] = useState<any>();
+  const [exisitingHandledChecked, setExisitingHandledChecked] = useState(false);
 
   const [armorHandle,setArmorhandle] = useState("");
 
@@ -42,7 +43,7 @@ const Page = () => {
           <div style={{position:"absolute",top:`${btnDistanceFromTop}px`}}>
             {
               renderBtns? 
-              <Walletconnect setWalletAddress={setWalletAddress}  baseApiURL={apiURL} setArmorhandle={setArmorhandle} setUser={setUser}/>
+              <Walletconnect setWalletAddress={setWalletAddress}  baseApiURL={apiURL} setArmorhandle={setArmorhandle} setUser={setUser} setExisitingHandledChecked={setExisitingHandledChecked}/>
               : ''
             }
           </div>
@@ -51,10 +52,10 @@ const Page = () => {
           
           <Info setBtnDistanceFromTop={setBtnDistanceFromTop} setRenderBtns={setRenderBtns} isDesktop={true}/> 
 
-          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL}/>
+          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL} exisitingHandledChecked={exisitingHandledChecked}/>
 
         </div>
-        <div className="flex-custom-0-7">
+        <div className="flex-custom-0-4">
 
         </div>
       </div>
@@ -64,9 +65,9 @@ const Page = () => {
 
           <Info setBtnDistanceFromTop={setBtnDistanceFromTop} setRenderBtns={setRenderBtns} isDesktop={false}/>
 
-          <Walletconnect setWalletAddress={setWalletAddress} baseApiURL={apiURL} setArmorhandle={setArmorhandle} setUser={setUser} />
+          <Walletconnect setWalletAddress={setWalletAddress} baseApiURL={apiURL} setArmorhandle={setArmorhandle} setUser={setUser} setExisitingHandledChecked={setExisitingHandledChecked}/>
         
-          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL}/>
+          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL} exisitingHandledChecked={exisitingHandledChecked}/>
             
       </div>
       

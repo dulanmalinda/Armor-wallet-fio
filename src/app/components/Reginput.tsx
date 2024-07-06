@@ -10,9 +10,10 @@ interface InfoProps {
   armorHandle: string | null
   setArmorhandle: (newValue: string) => void;
   baseApiURL:String;
+  exisitingHandledChecked:boolean;
 }
 
-const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProps) => {
+const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisitingHandledChecked}:InfoProps) => {
    const [nameInput, setnameInput] = useState<string>("");
 
   const contentElementRef = useRef<HTMLDivElement>(null);
@@ -95,6 +96,9 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
 
   return (
     <>
+    {
+      exisitingHandledChecked
+      ?
         <div className="flex flex-row items-start p-4 pt-0 sm:pt-4 max-w-full sm:max-w-3xl">
           <div className="flex-shrink-0 flex flex-row items-start">
 
@@ -169,6 +173,9 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
               </div>
           </div>
         </div>
+        :
+        ''
+      }
     </>
   )
 }
