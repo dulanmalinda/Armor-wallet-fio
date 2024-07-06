@@ -2,7 +2,8 @@ import React, { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import regCircle from '../assets/regpanel/regCircle.svg'
 import FioHandle from '../components/FioHandle'
-import ReCAPTCHA from 'react-google-recaptcha';
+import Captcha from './Captcha';
+import { useActiveAccount } from 'thirdweb/react';
 
 interface InfoProps {
   walletAddress: string | null
@@ -24,7 +25,11 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
   const [inputEnabled, setInputEnabled] = useState(true);
 
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+
+  const [signature, setSignature] = useState("");
+  const activeAccount = useActiveAccount();
 
   const handleChange = (e: { target: { value: any; }; }) => {
     const input = e.target.value;
@@ -36,6 +41,29 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
       // alert(`Word limit of ${wordLimit} exceeded`);
     }
   };
+
+  const handleSignMessage = async () => {
+    if (!nameInput) {
+      alert('Please enter a handle to sign.');
+      return;
+    }
+
+    setIsLoading(true);
+    setInputEnabled(false);
+
+    try {
+      const signature = await activeAccount?.signMessage({message:"Confirm you armor handle"});
+
+      if(signature)
+      {
+        setSignature(signature?.toString());
+      }
+
+    } catch (error) {
+      console.error("Error signing message:", error);
+      setIsLoading(false);
+    }
+  }; 
 
   useEffect(() => {
     if (contentElementRef.current) {
@@ -61,9 +89,9 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
     }
   }, [walletAddress]);
 
-  const handleCaptchaVerify = (token: string | null) => {
-    setCaptchaToken(token);
-  };
+  const togglePopUp  = () =>{
+    setShowPopup((prevState) => !prevState);
+}
 
   return (
     <>
@@ -107,19 +135,9 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                     }
                 </span>
                 
-                {
-                  walletAddress
-                  ?
-                    <ReCAPTCHA
-                    sitekey="6LfjewYqAAAAACtB-x_sXpPPO134pSfwqBQyn-yZ"
-                    ref={recaptchaRef}
-                    onChange={handleCaptchaVerify}
-                    className={`${armorHandle ? "hidden":""}`}
-                    style={{minHeight:"6rem"}}
-                  />
-                :
-                ''
-                }
+                  <div className="items-center">
+                    <Captcha isOpen={showPopup} onClose={togglePopUp} armorHandle={armorHandle} captchaToken={captchaToken} setCaptchaToken={setCaptchaToken} handleSignMessage={handleSignMessage} />
+                  </div>
 
                 <div className={`${armorHandle ? "hidden":""} flex justify-start items-center hideOnMobile`}>
                     <input disabled={!inputEnabled} type="text" className="border border-black p-2 text-right focus:outline-none" style={{width:"18rem",height:"2.5rem"}} placeholder="myname" onChange={handleChange} value={nameInput}/>
@@ -128,6 +146,10 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                       @armor
                     </span>
                     <FioHandle 
+                      togglePopUp={togglePopUp}
+                      signature={signature}
+                      setSignature={setSignature}
+                      handleSignMessage={handleSignMessage}
                       setInputEnabled={setInputEnabled}
                       nameInput={nameInput} setnameInput={setnameInput}
                       armorHandle={armorHandle} setArmorhandle={setArmorhandle}
@@ -146,6 +168,10 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL}:InfoProp
                       @armor
                     </span>
                     <FioHandle 
+                      togglePopUp={togglePopUp}
+                      signature={signature}
+                      setSignature={setSignature}
+                      handleSignMessage={handleSignMessage}
                       setInputEnabled={setInputEnabled}
                       nameInput={nameInput} setnameInput={setnameInput}
                       armorHandle={armorHandle} setArmorhandle={setArmorhandle}

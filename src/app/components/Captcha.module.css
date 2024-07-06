@@ -1,0 +1,35 @@
+.blurBG{
+    position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(20px); 
+      transition-property: opacity;
+      transition-duration: 0.2s; 
+      z-index: 10;
+    }
+    
+    @media (max-width: 1400px){
+    
+      }
+      
+      @media (max-width: 912px){
+        .blurBG{
+             position: fixed;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              background-color: rgba(255, 255, 255, 1);
+              backdrop-filter: blur(20px); 
+              transition-property: opacity;
+              transition-duration: 0.2s; 
+              z-index: 10;
+            }
+      }
+      
+      @media (min-width: 913px) {
+    
+      }
