@@ -37,7 +37,9 @@ const Header = () => {
 
         <div className="flex-custom-1-2 flex items-center justify-end">
           <div style={{width:"11.5rem"}}>
-            <Image src={logo} alt="brand-logo" style={{ width: '9.194rem', height: '2.363rem'}}/>
+            <a href='https://www.armorwallet.ai/'>
+              <Image src={logo} alt="brand-logo" style={{ width: '9.194rem', height: '2.363rem'}}/>
+            </a>
           </div>
         </div>
 
