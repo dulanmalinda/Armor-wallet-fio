@@ -26,14 +26,13 @@ const Captcha = ({ isOpen, onClose,armorHandle,captchaToken,setCaptchaToken,hand
 }, [isOpen]);
 
 useEffect(() => {
-    if (captchaToken) {
-        const timer = setTimeout(() => {
-            handleSignMessage();
-            closePopUp();
-        }, 450);
+  if (captchaToken) {
+      const timer = setTimeout(() => {
+        closePopUp();
+      }, 450);
 
-        return () => clearTimeout(timer);
-    }
+      return () => clearTimeout(timer);
+  }
 }, [captchaToken]);
 
   const setPopUpVisibleState = (isopen:boolean) =>{

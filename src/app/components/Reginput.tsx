@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import regCircle from '../assets/regpanel/regCircle.svg'
-import FioHandle from '../components/FioHandle'
+import RegHandle from '../components/RegHandle'
 import Captcha from './Captcha';
 import { useActiveAccount } from 'thirdweb/react';
+import ClipLoader from "react-spinners/ClipLoader";
 
 interface InfoProps {
   walletAddress: string | null
@@ -96,9 +97,6 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
 
   return (
     <>
-    {
-      exisitingHandledChecked
-      ?
         <div className="flex flex-row items-start p-4 pt-0 sm:pt-4 max-w-full sm:max-w-3xl">
           <div className="flex-shrink-0 flex flex-row items-start">
 
@@ -128,7 +126,12 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
             }}
             />
             </div>
-          <div className="ml-4 mt-0" ref={contentElementRef}>
+
+            {
+              exisitingHandledChecked || !walletAddress
+              ?
+
+              <div className="ml-4 mt-0" ref={contentElementRef}>
               <div className="flex flex-col items-Start">
                 <span style={{fontSize:"1rem",fontWeight:"400",marginBottom:"1rem"}}>
                     {
@@ -150,11 +153,10 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
                     <span style={{fontSize:"1rem",fontWeight:"700",marginLeft:"0.5rem"}}>
                       @armor
                     </span>
-                    <FioHandle 
+                    <RegHandle 
                       togglePopUp={togglePopUp}
                       signature={signature}
                       setSignature={setSignature}
-                      handleSignMessage={handleSignMessage}
                       setInputEnabled={setInputEnabled}
                       nameInput={nameInput} setnameInput={setnameInput}
                       armorHandle={armorHandle} setArmorhandle={setArmorhandle}
@@ -172,10 +174,18 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
 
               </div>
           </div>
+
+              :
+
+              <ClipLoader
+                  color={"#000000"}
+                  loading={true}
+                  size={25}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />  
+            }
         </div>
-        :
-        ''
-      }
     </>
   )
 }
