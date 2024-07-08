@@ -78,6 +78,7 @@ const RegHandle = ({
                 account: activeAccount,
           });
 
+          console.log(receipt);
           saveUser(receipt.transactionHash);
         }
       }

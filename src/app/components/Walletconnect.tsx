@@ -28,6 +28,8 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser,setE
 
   const connectedChain = defineChain(connectedChainId);
 
+  const desiredChain = defineChain(11155111);
+
   const activeAccount = useActiveAccount();
 
   const client = createThirdwebClient({
@@ -160,6 +162,8 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser,setE
                   },
                 }}
                 
+                chain={desiredChain}
+
                 client={client} 
 
                 wallets={wallets} 
