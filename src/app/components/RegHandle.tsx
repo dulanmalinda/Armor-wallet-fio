@@ -262,28 +262,6 @@ const RegHandle = ({
           <span className={`${(requestSuccess) ? "text-[#7CDF00]" : "hidden"}`}>
             Congratulations, you have registered your handle.
           </span>
-
-          <div className='flex flex-col items-start'>
-              <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
-                {error || String(error)}
-              </span>
-
-              {/* {
-                !requestSuccess
-                ?
-                <button 
-                  className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
-                  style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
-                  onClick={reloadPage}
-                  >
-
-                  Try Again
-
-                </button>
-                :
-                ''
-              } */}
-            </div>
             
         </div>
     </div>
