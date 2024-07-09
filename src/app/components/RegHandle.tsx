@@ -125,9 +125,10 @@ const RegHandle = ({
       setInputEnabled(false);
       setHasRequested(true);
 
-      fetch(`${baseApiURL}checkUsernameAvailability/${nameInput}`)
+      fetch(`${baseApiURL}checkUsernameAvailability/${nameInput}@armor`)
         .then((response) => response.json())
         .then((data) => {
+            console.log(data);
             if(data.available)
             {
               sendTransaction(nameInput);
