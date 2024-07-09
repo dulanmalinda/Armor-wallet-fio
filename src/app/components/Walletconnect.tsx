@@ -28,7 +28,7 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser,setE
 
   const connectedChain = defineChain(connectedChainId);
 
-  const desiredChain = defineChain(11155111);
+  const desiredChain = defineChain(8453);
 
   const activeAccount = useActiveAccount();
 

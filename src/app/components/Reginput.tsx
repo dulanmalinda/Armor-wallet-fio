@@ -33,6 +33,8 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
   const [signature, setSignature] = useState("");
   const activeAccount = useActiveAccount();
 
+  const [error, setError] = useState<string|null>(null);
+
   const handleChange = (e: { target: { value: any; }; }) => {
     const input = e.target.value;
     const characterLimit = 100; 
@@ -69,7 +71,7 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
 
   useEffect(() => {
     if (contentElementRef.current) {
-      setHeightContent(contentElementRef.current.offsetHeight + 30);
+      setHeightContent(contentElementRef.current.offsetHeight + 20);
     }
   }, [armorHandle,walletAddress]);
 
@@ -87,6 +89,9 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
         setHasRequested(false);
       }
 
+      if (error) {
+        setError(null);
+      }
       setCaptchaToken(null);
     }
   }, [walletAddress]);
@@ -143,7 +148,7 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
                 </span>
                 
                   <div className="items-center">
-                    <Captcha isOpen={showPopup} onClose={togglePopUp} armorHandle={armorHandle} captchaToken={captchaToken} setCaptchaToken={setCaptchaToken} handleSignMessage={handleSignMessage} />
+                    <Captcha isOpen={showPopup} onClose={togglePopUp} armorHandle={armorHandle} captchaToken={captchaToken} setCaptchaToken={setCaptchaToken}/>
                   </div>
 
                 <div className={`${armorHandle ? "hidden":""} flex justify-start items-center`}>
@@ -165,11 +170,35 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
                       hasRequested={hasRequested} setHasRequested={setHasRequested} 
                       requestSuccess={requestSuccess}  setRequestSuccess={setRequestSuccess}
                       baseApiURL={baseApiURL}
-                      captchaToken={captchaToken}/>
+                      captchaToken={captchaToken}
+                      error={error}
+                      setError={setError}/>
                 </div>
 
                 <div className={`${armorHandle ? "":"hidden"} flex justify-start items-center`} style={{fontSize:"2.25rem",fontWeight:"400"}}>
                     {armorHandle}
+                </div>
+
+                <div className='flex flex-col items-start mt-2'>
+                  <span className={`${(!requestSuccess && error) ? "text-[#FF1A5F]" : "hidden"}`} style={{fontSize:"0.8rem",fontWeight:"700"}}>
+                    {error || String(error)}
+                  </span>
+
+                  {/* {
+                    !requestSuccess
+                    ?
+                    <button 
+                      className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
+                      style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
+                      onClick={reloadPage}
+                      >
+
+                      Try Again
+
+                    </button>
+                    :
+                    ''
+                  } */}
                 </div>
 
               </div>

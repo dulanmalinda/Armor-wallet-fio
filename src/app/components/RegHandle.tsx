@@ -4,6 +4,7 @@ import { useSendTransaction } from "thirdweb/react";
 import { defineChain, sendAndConfirmTransaction,createThirdwebClient } from "thirdweb";
 import { prepareTransaction, toWei } from "thirdweb";
 import ClipLoader from "react-spinners/ClipLoader";
+import emojiRegex from 'emoji-regex';
 
 interface RegHandleProps {
   togglePopUp: () => void;
@@ -23,6 +24,8 @@ interface RegHandleProps {
   setRequestSuccess: (newValue: boolean ) => void;
   baseApiURL: String;
   captchaToken: string|null;
+  error:string|null;
+  setError:(newValue: string|null ) => void;
 }
 
 const RegHandle = ({
@@ -42,10 +45,12 @@ const RegHandle = ({
         requestSuccess,
         setRequestSuccess,
         baseApiURL,
-        captchaToken}:RegHandleProps) => {
+        captchaToken,
+        error,
+        setError
+      }:RegHandleProps) => {
 
     const [result, setResult] = useState(null);
-    const [error, setError] = useState<string|null>(null);
 
     const [showRequestStat, setShowRequestStat] = useState(false);
 
@@ -56,18 +61,20 @@ const RegHandle = ({
       });
 
     const textToHex = (text: string) => {
-      return text
+      const _handle = text + "@armor"
+      return _handle
         .split('')
         .map((char) => char.charCodeAt(0).toString(16))
         .join('');
     };
       
     const sendTransaction = async (username:string) => {
+      console.log(`0x${textToHex(username)}`);
       try {
         const transaction = prepareTransaction({
           to: activeAccount?.address,
           value: toWei("0"),
-          chain: defineChain(11155111),
+          chain: defineChain(8453),
           data: `0x${textToHex(username)}`,
           client:client,
         });
@@ -102,6 +109,11 @@ const RegHandle = ({
         });
     
       const data = await res.json(); 
+      
+      if(error)
+      {
+        setError(null);
+      }
 
       setRequestSuccess(true);
       setIsLoading(false);
@@ -125,11 +137,38 @@ const RegHandle = ({
               setIsLoading(false);
               setInputEnabled(true);
 
-              setError("Username Already Taken");
+              setError("Handle is already taken.");
 
               setRequestSuccess(false);
             }
         });
+    };
+
+    const inputValidate = () => {
+      if (error) {
+        setError(null);
+      }
+    
+      // Regex for letters, numbers, dots, dashes, and underscores (excluding spaces)
+      const baseRegex = /^[a-zA-Z0-9._-]+$/;
+    
+      // Get the emoji regex
+      const regex = emojiRegex();
+    
+      // Check if the value matches the base regex or contains emojis
+      let isBaseValid = true;
+      for (const char of nameInput) {
+        if (!baseRegex.test(char) && !regex.test(char)) {
+          isBaseValid = false;
+          break;
+        }
+      }
+    
+      if (!isBaseValid) {
+        setError("Only .-_ and letters, numbers, and emojis are allowed. No spaces.");
+      } else {
+        checkUsernameAvailability();
+      }
     };
 
     const reloadPage = ()=>{
@@ -139,7 +178,7 @@ const RegHandle = ({
     useEffect(() => {
       if (captchaToken) {
           const timer = setTimeout(() => {
-            checkUsernameAvailability();
+            inputValidate();
           }, 450);
   
           return () => clearTimeout(timer);
@@ -173,8 +212,8 @@ const RegHandle = ({
     <>
     <div className='hideOnMobile'>
     <button 
-          className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
-          onClick={captchaToken ? checkUsernameAvailability : togglePopUp}
+          className={`${(showRequestStat && requestSuccess)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          onClick={captchaToken ? inputValidate : togglePopUp}
           style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
             {
               isLoading?
@@ -195,28 +234,6 @@ const RegHandle = ({
             Congratulations, you have registered your handle.
           </span>
 
-            <div className='flex flex-col items-start'>
-              <span className={`${(!requestSuccess) ? "text-[#F70000]" : "hidden"}`}>
-                {error || String(error)}
-              </span>
-
-              {/* {
-                !requestSuccess
-                ?
-                <button 
-                  className='bg-[#BDFF6A] transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]'
-                  style={{ width:"6rem", height:"1.7rem", fontSize: "0.8rem", fontWeight:"400"}} 
-                  onClick={reloadPage}
-                  >
-
-                  Try Again
-
-                </button>
-                :
-                ''
-              } */}
-            </div>
-
         </div>
 
 
@@ -224,8 +241,8 @@ const RegHandle = ({
 
     <div className='hideOnDesktop'>
     <button 
-          className={`${(showRequestStat)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
-          onClick={captchaToken ? checkUsernameAvailability : togglePopUp}
+          className={`${(showRequestStat && requestSuccess)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          onClick={captchaToken ? inputValidate : togglePopUp}
           style={{ width:"10rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
             {
               isLoading?

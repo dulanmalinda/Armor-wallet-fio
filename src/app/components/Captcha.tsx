@@ -11,10 +11,9 @@ interface captchaProps {
     armorHandle: string | null;
     captchaToken: string | null;
     setCaptchaToken: (newValue: string | null) => void;
-    handleSignMessage: () => void;
   }
 
-const Captcha = ({ isOpen, onClose,armorHandle,captchaToken,setCaptchaToken,handleSignMessage}:captchaProps) => {
+const Captcha = ({ isOpen, onClose,armorHandle,captchaToken,setCaptchaToken}:captchaProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const recaptchaRef = useRef<ReCAPTCHA>(null);
