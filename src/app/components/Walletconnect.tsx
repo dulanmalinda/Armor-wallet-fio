@@ -258,6 +258,8 @@ const Walletconnect = ({ setWalletAddress,baseApiURL,setArmorhandle,setUser,setE
                   },
                 }}
                 
+                chain={desiredChain}
+                
                 client={client} 
 
                 wallets={wallets} 
