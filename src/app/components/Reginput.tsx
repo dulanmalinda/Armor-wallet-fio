@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
-import regCircle from '../assets/regpanel/regCircle.svg'
+import regCircle from '../assets/footer/logo_footer.svg'
 import RegHandle from '../components/RegHandle'
 import Captcha from './Captcha';
 import { useActiveAccount } from 'thirdweb/react';
@@ -127,7 +127,15 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
                     
                 </span> */}
                 <span className="mx-1 sm:mx-0 sm:ml-2 flex justify-end" style={{ width: '2rem'}}>
-                    <Image src={regCircle} alt="reg circle" style={{width:"1.25rem",height:"1.25rem",marginTop:"0.25rem"}}/>
+                  {
+                    exisitingHandledChecked || !walletAddress
+                    ?
+                      <Image src={regCircle} alt="reg circle" style={{width:"1.25rem",height:"1.25rem",marginTop:"0.25rem"}}/>
+                    :
+                    <div style={{marginLeft:"0.75rem"}}>
+                      <Spinner width={25} height={25} />
+                    </div>
+                  }
                 </span>
             </div>
 
@@ -216,9 +224,7 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
           </div>
 
               :
-              <div style={{marginLeft:"0.75rem"}}>
-                <Spinner width={30} height={30} />
-              </div>
+              ''
             }
         </div>
     </>

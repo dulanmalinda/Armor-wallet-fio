@@ -184,7 +184,14 @@ const RegHandle = ({
       if (!isBaseValid) {
         setError("Only .-_ and letters, numbers, and emojis are allowed. No spaces.");
       } else {
-        checkUsernameAvailability();
+        if(captchaToken)
+        {
+          checkUsernameAvailability();
+        }
+        else
+        {
+          togglePopUp();
+        }
       }
     };
 
@@ -195,7 +202,7 @@ const RegHandle = ({
     useEffect(() => {
       if (captchaToken) {
           const timer = setTimeout(() => {
-            inputValidate();
+            checkUsernameAvailability();
           }, 450);
   
           return () => clearTimeout(timer);
@@ -225,12 +232,23 @@ const RegHandle = ({
     }
   }, [walletAddress]);
 
+  useEffect(() => {
+    if(requestSuccess)
+    {
+      const timer = setTimeout(() => {
+        reloadPage();
+      }, 6000); 
+
+      return () => clearTimeout(timer);
+    }
+  }, [requestSuccess]);
+
   return (
     <>
     <div className='hideOnMobile'>
     <button 
           className={`${(showRequestStat && requestSuccess)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2 flex justify-center items-center`}
-          onClick={captchaToken ? inputValidate : togglePopUp}
+          onClick={inputValidate}
           style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
             {
               isLoading?
@@ -253,7 +271,7 @@ const RegHandle = ({
     <div className='hideOnDesktop'>
     <button 
           className={`${(showRequestStat && requestSuccess)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2 flex justify-center items-center`}
-          onClick={captchaToken ? inputValidate : togglePopUp}
+          onClick={inputValidate}
           style={{ width:"10rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
             {
               isLoading?
