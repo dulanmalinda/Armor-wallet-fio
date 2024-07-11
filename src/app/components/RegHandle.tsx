@@ -5,6 +5,7 @@ import { defineChain, sendAndConfirmTransaction,createThirdwebClient } from "thi
 import { prepareTransaction, toWei } from "thirdweb";
 import ClipLoader from "react-spinners/ClipLoader";
 import emojiRegex from 'emoji-regex';
+import Spinner from './Utils/Spinner';
 
 interface RegHandleProps {
   togglePopUp: () => void;
@@ -67,9 +68,17 @@ const RegHandle = ({
         .map((char) => char.charCodeAt(0).toString(16))
         .join('');
     };
+
+    const containsSentence = (input: string, sentence: string): boolean => {
+      const normalize = (str: string) => str.replace(/\s+/g, '').toLowerCase();
+    
+      const normalizedInput = normalize(input);
+      const normalizedSentence = normalize(sentence);
+    
+      return normalizedInput.includes(normalizedSentence);
+    };
       
     const sendTransaction = async (username:string) => {
-      console.log(`0x${textToHex(username)}`);
       try {
         const transaction = prepareTransaction({
           to: activeAccount?.address,
@@ -91,7 +100,16 @@ const RegHandle = ({
       catch (err:any){
         setIsLoading(false);
         setInputEnabled(true);
-        setError(err.message);
+
+        if(containsSentence(err.message,"user rejected") || containsSentence(err.message,"user denied"))
+        {
+          setError("User rejected the request");
+        }
+        else
+        {
+          setError(err.message);
+        }
+
         setRequestSuccess(false);
       }
     };
@@ -211,18 +229,12 @@ const RegHandle = ({
     <>
     <div className='hideOnMobile'>
     <button 
-          className={`${(showRequestStat && requestSuccess)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          className={`${(showRequestStat && requestSuccess)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2 flex justify-center items-center`}
           onClick={captchaToken ? inputValidate : togglePopUp}
           style={{ width:"22rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
             {
               isLoading?
-                <ClipLoader
-                  color={"#000000"}
-                  loading={isLoading}
-                  size={15}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />  
+                <Spinner width={25} height={25} /> 
               :
               'REGISTER'
             }                      
@@ -240,18 +252,12 @@ const RegHandle = ({
 
     <div className='hideOnDesktop'>
     <button 
-          className={`${(showRequestStat && requestSuccess)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2`}
+          className={`${(showRequestStat && requestSuccess)? "hidden":""} ml-5 mr-4 bg-[#BDFF6A] ${( isLoading || !nameInput || !walletAddress)? "opacity-50": "transition-colors duration-300 ease-in-out hover:bg-[#D9FFA3]"} px-4 py-2 flex justify-center items-center`}
           onClick={captchaToken ? inputValidate : togglePopUp}
           style={{ width:"10rem",height:"2.5rem", fontSize: "1rem",fontWeight:"400"}} disabled={isLoading || !nameInput || !walletAddress}>
             {
               isLoading?
-                <ClipLoader
-                  color={"#000000"}
-                  loading={isLoading}
-                  size={15}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />  
+                <Spinner width={18} height={18} /> 
               :
               'REGISTER'
             }                      

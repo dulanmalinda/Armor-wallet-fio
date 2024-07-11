@@ -5,6 +5,7 @@ import RegHandle from '../components/RegHandle'
 import Captcha from './Captcha';
 import { useActiveAccount } from 'thirdweb/react';
 import ClipLoader from "react-spinners/ClipLoader";
+import Spinner from './Utils/Spinner';
 
 interface InfoProps {
   walletAddress: string | null
@@ -205,14 +206,9 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
           </div>
 
               :
-
-              <ClipLoader
-                  color={"#000000"}
-                  loading={true}
-                  size={25}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />  
+              <div style={{marginLeft:"0.75rem"}}>
+                <Spinner width={30} height={30} />
+              </div>
             }
         </div>
     </>
