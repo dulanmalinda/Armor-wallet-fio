@@ -90,10 +90,20 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
         setHasRequested(false);
       }
 
+      if(inputEnabled){
+        setInputEnabled(false);
+      }
+
       if (error) {
         setError(null);
       }
       setCaptchaToken(null);
+    }
+    else
+    {
+      if(!inputEnabled){
+        setInputEnabled(true);
+      }
     }
   }, [walletAddress]);
 
