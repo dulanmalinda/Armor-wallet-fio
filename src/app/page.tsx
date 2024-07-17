@@ -8,7 +8,7 @@ import Info from './components/Info'
 import { useRef, useEffect, useState } from 'react';
 import Reginput from './components/Reginput'
 
-const apiURL = "https://armorfio-server.vercel.app/api/";
+const apiURL = "https://handle.armorwallet.ai/api/";
 
 const Page = () => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
