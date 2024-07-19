@@ -12,6 +12,7 @@
     "@fioprotocol/fiosdk": "^1.8.0",
     "@types/react-google-recaptcha": "^2.1.9",
     "emoji-regex": "^10.3.0",
+    "grapheme-splitter": "^1.0.4",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",

@@ -5,6 +5,7 @@ import { defineChain, sendAndConfirmTransaction,createThirdwebClient } from "thi
 import { prepareTransaction, toWei } from "thirdweb";
 import ClipLoader from "react-spinners/ClipLoader";
 import emojiRegex from 'emoji-regex';
+import GraphemeSplitter from 'grapheme-splitter';
 import Spinner from './Utils/Spinner';
 
 interface RegHandleProps {
@@ -168,22 +169,30 @@ const RegHandle = ({
     
       // Regex for letters, numbers, dots, dashes, and underscores (excluding spaces)
       const baseRegex = /^[a-zA-Z0-9._-]+$/;
-      
-      // Regex for emojis, including flag emojis
-      const emojiRegex = /(?:[\u{1F1E6}-\u{1F1FF}]|[\p{Extended_Pictographic}])/u;
+    
+      // Get the comprehensive emoji regex
+      const regex = emojiRegex();
+      const splitter = new GraphemeSplitter();
     
       // Check if the value matches the base regex or contains emojis
       let isBaseValid = true;
-      for (const char of nameInput) {
-        if (!baseRegex.test(char) && !emojiRegex.test(char)) {
+    
+      const clusters = splitter.splitGraphemes(nameInput);
+      console.log("Input clusters:", clusters);
+    
+      for (const cluster of clusters) {
+        console.log(`Checking cluster: ${cluster}`);
+        if (!baseRegex.test(cluster) && !regex.test(cluster)) {
           isBaseValid = false;
           break;
         }
       }
     
       if (!isBaseValid) {
+        console.log("Validation failed");
         setError("Only .-_ and letters, numbers, and emojis are allowed. No spaces.");
       } else {
+        console.log("Validation passed");
         if (captchaToken) {
           checkUsernameAvailability();
         } else {
