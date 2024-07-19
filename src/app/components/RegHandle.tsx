@@ -168,14 +168,14 @@ const RegHandle = ({
     
       // Regex for letters, numbers, dots, dashes, and underscores (excluding spaces)
       const baseRegex = /^[a-zA-Z0-9._-]+$/;
-    
-      // Get the emoji regex
-      const regex = emojiRegex();
+      
+      // Regex for emojis, including flag emojis
+      const emojiRegex = /(?:[\u{1F1E6}-\u{1F1FF}]|[\p{Extended_Pictographic}])/u;
     
       // Check if the value matches the base regex or contains emojis
       let isBaseValid = true;
       for (const char of nameInput) {
-        if (!baseRegex.test(char) && !regex.test(char)) {
+        if (!baseRegex.test(char) && !emojiRegex.test(char)) {
           isBaseValid = false;
           break;
         }
@@ -184,12 +184,9 @@ const RegHandle = ({
       if (!isBaseValid) {
         setError("Only .-_ and letters, numbers, and emojis are allowed. No spaces.");
       } else {
-        if(captchaToken)
-        {
+        if (captchaToken) {
           checkUsernameAvailability();
-        }
-        else
-        {
+        } else {
           togglePopUp();
         }
       }
