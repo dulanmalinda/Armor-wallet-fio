@@ -150,12 +150,21 @@ const RegHandle = ({
             {
               sendTransaction(nameInput);
             }
-            else
+            else if(!data.isSale)
             {
               setIsLoading(false);
               setInputEnabled(true);
 
               setError("Handle is already taken.");
+
+              setRequestSuccess(false);
+            }
+            else
+            {
+              setIsLoading(false);
+              setInputEnabled(true);
+
+              setError("This name is pre registered, please contact us to get this handle");
 
               setRequestSuccess(false);
             }
