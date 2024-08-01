@@ -12,10 +12,11 @@ interface InfoProps {
   armorHandle: string | null
   setArmorhandle: (newValue: string) => void;
   baseApiURL:String;
+  airdropApiURL:string;
   exisitingHandledChecked:boolean;
 }
 
-const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisitingHandledChecked}:InfoProps) => {
+const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,airdropApiURL,exisitingHandledChecked}:InfoProps) => {
    const [nameInput, setnameInput] = useState<string>("");
 
   const contentElementRef = useRef<HTMLDivElement>(null);
@@ -189,6 +190,7 @@ const Reginput = ({walletAddress,armorHandle,setArmorhandle,baseApiURL,exisiting
                       hasRequested={hasRequested} setHasRequested={setHasRequested} 
                       requestSuccess={requestSuccess}  setRequestSuccess={setRequestSuccess}
                       baseApiURL={baseApiURL}
+                      airdropApiURL={airdropApiURL}
                       captchaToken={captchaToken}
                       error={error}
                       setError={setError}/>

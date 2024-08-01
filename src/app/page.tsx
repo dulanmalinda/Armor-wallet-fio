@@ -9,6 +9,7 @@ import { useRef, useEffect, useState } from 'react';
 import Reginput from './components/Reginput'
 
 const apiURL = "https://handle.armorwallet.ai/api/";
+const airdropApiURL = "https://airdrop.armorwallet.ai:777/v1/web-hooks/register-activity";
 
 const Page = () => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -52,7 +53,7 @@ const Page = () => {
           
           <Info setBtnDistanceFromTop={setBtnDistanceFromTop} setRenderBtns={setRenderBtns} isDesktop={true}/> 
 
-          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL} exisitingHandledChecked={exisitingHandledChecked}/>
+          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL} airdropApiURL={airdropApiURL}  exisitingHandledChecked={exisitingHandledChecked}/>
 
         </div>
         <div className="flex-custom-0-4">
@@ -67,7 +68,7 @@ const Page = () => {
 
           <Walletconnect setWalletAddress={setWalletAddress} baseApiURL={apiURL} setArmorhandle={setArmorhandle} setUser={setUser} setExisitingHandledChecked={setExisitingHandledChecked}/>
         
-          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL} exisitingHandledChecked={exisitingHandledChecked}/>
+          <Reginput walletAddress={walletAddress} armorHandle={armorHandle} setArmorhandle={setArmorhandle}  baseApiURL={apiURL} airdropApiURL={airdropApiURL} exisitingHandledChecked={exisitingHandledChecked}/>
             
       </div>
       

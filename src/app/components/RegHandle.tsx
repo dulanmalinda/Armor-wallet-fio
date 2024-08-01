@@ -25,6 +25,7 @@ interface RegHandleProps {
   requestSuccess: boolean;
   setRequestSuccess: (newValue: boolean ) => void;
   baseApiURL: String;
+  airdropApiURL: string;
   captchaToken: string|null;
   error:string|null;
   setError:(newValue: string|null ) => void;
@@ -47,6 +48,7 @@ const RegHandle = ({
         requestSuccess,
         setRequestSuccess,
         baseApiURL,
+        airdropApiURL,
         captchaToken,
         error,
         setError
@@ -133,9 +135,29 @@ const RegHandle = ({
         setError(null);
       }
 
-      setRequestSuccess(true);
-      setIsLoading(false);
+      claimAirdropPoints();
     }
+
+    const claimAirdropPoints = async () => {
+      const res = await fetch(`${airdropApiURL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer rNxpt64FvzyRkGsL9gmTb32wD8UcMQdV`,
+        },
+        body: JSON.stringify({ "subscriber_wallet_address":walletAddress,"campaign_slug":"armor-wallet-airdrop-2024","activity_type_slug":"claim-armor-handle"}),
+      });
+  
+    const data = await res.json(); 
+    
+    if(error)
+    {
+      setError(null);
+    }
+
+    setRequestSuccess(true);
+    setIsLoading(false);
+  }
   
 
     const checkUsernameAvailability = () => {
